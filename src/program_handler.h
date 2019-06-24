@@ -13,6 +13,9 @@ public:
     std::shared_ptr<thr_logic>logic1;
     std::shared_ptr<thr_logic>logic2;
     std::vector<float> data;
+
+
+    std::mutex m;
 };
 
 #endif // PROGRAM_HANDLER_H

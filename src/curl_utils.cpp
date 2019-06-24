@@ -51,17 +51,22 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *storage)
     //slow code here, todo:
     // std::copy from algorithm.h directly to vector
     // poidet i tak poka
+
+        temp_ptr->m.lock();
     for (i=0;i<nmemb/sizeof (float);++i)
     {
+
+
 
         temp_ptr->data.push_back(*float_ptr);
 
         //std::cout<<"data:"<< *float_ptr <<" "<< std::endl;
         float_ptr++;
     }
+        temp_ptr->m.unlock();
 
-    temp_ptr->logic2->run();
-    temp_ptr->logic1->wait();
+   // temp_ptr->logic2->run();
+   // temp_ptr->logic1->wait();
 
 
 
@@ -71,7 +76,7 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *storage)
 }
 
 
-void curl_utils::run(std::string url,program_handler *storage)
+void curl_utils::run(std::string url,program_handler *storage  )
 {
 
     CURL *curl;

@@ -18,21 +18,28 @@
 //our data and thread logic
 #include "program_handler.h"
 
+
+
 void downloadData(std::shared_ptr<program_handler> pr,std::shared_ptr<curl_utils> c,std::string myurl)
 {
     c->run(myurl,pr.get());
 }
 
-void processData(std::shared_ptr<program_handler> pr)
+void processData(std::shared_ptr<program_handler> pr    )
 {
     static unsigned long counter=0;
     while(true)
     {
-        pr->logic2->wait();
+       // pr->logic2->wait();
 
         std::cout<<"im in the printData="<<counter++<<std::endl;
         if(!pr->data.empty())
         {
+
+
+            pr->m.lock();
+
+
             double average=0;
             for (unsigned i=0;i<pr->data.size();++i)
             {
@@ -43,9 +50,11 @@ void processData(std::shared_ptr<program_handler> pr)
             counter++;
             std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
             pr->data.clear();
+
+             pr->m.unlock();
         }
 
-        pr->logic1->run();
+        //pr->logic1->run();
         if(pr->logic_main->is_thread_ready==true)
         {
             break;
