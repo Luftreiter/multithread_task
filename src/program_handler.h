@@ -39,7 +39,7 @@ public:
     std::shared_ptr<thr_logic>logic2;
     std::vector<float> data;
   //  std::vector<float> data_process;
-
+std::vector<float >temp_data
     // boost::circular_buffer<float> data;
     struct pos *download_pos;
     struct pos *process_pos;

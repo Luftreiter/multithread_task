@@ -32,7 +32,7 @@ void processData(std::shared_ptr<program_handler> pr    )
     {
 
         pr->m->lock();
-        std::vector<float >temp_data= data;
+        pr->temp_data= data;
         pr->data .clear();
         pr->m->unlock();
 
@@ -49,9 +49,7 @@ void processData(std::shared_ptr<program_handler> pr    )
             average=average/static_cast<double>(100);
             counter++;
 
-            pr->m->lock();
-
-            pr->m->unlock();
+        pr->temp_data .clear();
         }
 
 
