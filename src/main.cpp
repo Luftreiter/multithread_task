@@ -30,39 +30,50 @@ void processData(std::shared_ptr<program_handler> pr    )
     static unsigned long counter=0;
     while(true)
     {
-       // pr->logic2->wait();
-
-        std::cout<<"im in the printData="<<counter++<<std::endl;
-        if(!pr->data.empty())
-        {
+        // pr->logic2->wait();
 
 
-            pr->m.lock();
+            pr->process_pos->start_index=pr->data.size();
 
-
-            double average=0;
-            for (unsigned i=0;i<pr->data.size();++i)
+            if(pr->data.size()>100)
             {
-                average+=static_cast<double>(pr->data.at(i));
-               // std::cout<<pr->data.at(i)<<" ";
-            }
-            average=average/static_cast<double>(pr->data.size());
-            counter++;
-            std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
-            pr->data.clear();
 
-             pr->m.unlock();
+                double average=0;
+                for (unsigned i=0;i<100;++i)
+                {
+                    average+=static_cast<double>(pr->data.at(i));
+                  pr->data.pop_back();
+
+                    std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
+                }
+                average=average/static_cast<double>(100);
+                counter++;
+
+            }
+            else {
+              //  pr->logic1->wait();
+          //  pr->data.clear();
+            }
+
+            // std::cout<<"process_data "<<counter++ <<"  t"<<std::endl;
+
+
+            //   pr->m.lock();
+
+
+            if(pr->logic_main->is_thread_ready==true)
+            {
+                break;
+            }
+            //     pr->m.unlock();
         }
 
         //pr->logic1->run();
-        if(pr->logic_main->is_thread_ready==true)
-        {
-            break;
-        }
+
     }
 
 
-}
+
 
 
 int main(int argc ,char **argv)
