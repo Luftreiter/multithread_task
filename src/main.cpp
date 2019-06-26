@@ -33,8 +33,7 @@ void processData(std::shared_ptr<program_handler> pr    )
 
 
 
-
-
+pr->m->lock();
         if(!pr->data .empty())
         {
             double average=0;
@@ -49,7 +48,7 @@ void processData(std::shared_ptr<program_handler> pr    )
 
             pr->data .clear();
         }
-
+pr->m->unlock();
 
         if(pr->logic_main->is_thread_ready==true)
         {
