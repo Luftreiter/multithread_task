@@ -20,7 +20,7 @@ file(GLOB_RECURSE SRC src/*.cpp src/*.h)
 ###
 
 ### link external libs to project
-set(CURL_LIBRARY "-lcurl")
+#set(CURL_LIBRARY "-lcurl")
 #use this if you in linux (first install it by sudo apt install libcurl or curl)
 #find_package(CURL REQUIRED)
 #else
@@ -31,9 +31,19 @@ option(BUILD_TESTING OFF)
 ADD_SUBDIRECTORY(3rd_party/curl)
 #}
 
+
+#set(Boost_USE_STATIC_LIBS OFF)
+#set(Boost_USE_MULTITHREADED ON)
+#set(Boost_USE_STATIC_RUNTIME OFF)
+#find_package(Boost 1.60.0 COMPONENTS filesystem regex system)
+
+
+#include_directories(${Boost_INCLUDE_DIRS})
+
+
+
+
 include_directories(${PROJECT_SOURCE_DIR}/3rd_party/curl/include)
 add_executable(${PROJECT_NAME} ${SRC})
-target_link_libraries(${PROJECT_NAME} ${CURL_LIBRARY}  pthread)
-
-
-
+#Boost::system Boost::filesystem Boost::regex
+    target_link_libraries(${PROJECT_NAME}  libcurl  pthread)

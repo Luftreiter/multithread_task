@@ -30,55 +30,35 @@ void processData(std::shared_ptr<program_handler> pr    )
     static unsigned long counter=0;
     while(true)
     {
-        // pr->logic2->wait();
 
 
-        pr->process_pos->start_index=pr->download_pos->start_index;
-        pr->process_pos->end_index=pr->download_pos->end_index;
 
 
-        if(!pr->data_download.empty())
-        {
 
-            for (unsigned i=0;i<pr->data_download.size();++i)
-            {
-
-                 pr->data_process.push_back(pr->data_download[i]);
-
-            }
-
-
-        }
-
-        if(!pr->data_process.empty())
+        if(!pr->data .empty())
         {
             double average=0;
-            for (unsigned i=0;i<pr->data_process.size();++i)
+            for (unsigned i=0;i<pr->data .size();++i)
             {
-                average+=static_cast<double>(pr->data_process.at(i));
+                average+=static_cast<double>(pr->data .at(i));
 
                 std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
             }
             average=average/static_cast<double>(100);
             counter++;
 
-            pr->data_process.clear();
+            pr->data .clear();
         }
-
-        // std::cout<<"process_data "<<counter++ <<"  t"<<std::endl;
-
-
-        //   pr->m.lock();
 
 
         if(pr->logic_main->is_thread_ready==true)
         {
             break;
         }
-        //     pr->m.unlock();
+
     }
 
-    //pr->logic1->run();
+
 
 }
 

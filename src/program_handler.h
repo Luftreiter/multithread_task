@@ -6,7 +6,7 @@
 #include <memory>
 #include <vector>
 
-#include <boost/circular_buffer.hpp>
+//#include <boost/circular_buffer.hpp>
 
 
 struct pos
@@ -14,10 +14,10 @@ struct pos
 
 
     pos(int start_index_, int end_index_)
-   {
-       start_index=start_index_;
-       end_index=end_index_;
-   }
+    {
+        start_index=start_index_;
+        end_index=end_index_;
+    }
 
     int start_index;
     int end_index;
@@ -37,10 +37,10 @@ public:
     std::shared_ptr<thr_logic>logic_main;
     std::shared_ptr<thr_logic>logic1;
     std::shared_ptr<thr_logic>logic2;
-     std::vector<float> data_download;
-      std::vector<float> data_process;
+    std::vector<float> data;
+  //  std::vector<float> data_process;
 
-   // boost::circular_buffer<float> data;
+    // boost::circular_buffer<float> data;
     struct pos *download_pos;
     struct pos *process_pos;
     std::mutex m;
