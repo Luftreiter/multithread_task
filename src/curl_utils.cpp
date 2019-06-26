@@ -64,16 +64,16 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *storage)
     }
 
 
-    if(temp_ptr->data .empty())
+   // if(temp_ptr->data .empty())
     {
-
+temp_ptr->m.lock();
         for (unsigned i=0;i<data_temp.size();++i)
         {
 
              temp_ptr->data.push_back(data_temp[i]);
 
         }
-
+temp_ptr->m.unlock();
 
     }
 
@@ -81,8 +81,9 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *storage)
 if (data_temp.size()>10000)
 {
    // temp_ptr->data
-
+temp_ptr->m.lock();
     data_temp.clear();
+temp_ptr->m.unlock();
 }
 
 

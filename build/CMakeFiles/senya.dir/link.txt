@@ -1,1 +1,0 @@
-/usr/bin/g++  -g  -rdynamic CMakeFiles/senya.dir/src/curl_utils.cpp.o CMakeFiles/senya.dir/src/main.cpp.o CMakeFiles/senya.dir/src/program_handler.cpp.o CMakeFiles/senya.dir/src/thr_logic.cpp.o  -o bin/senya -Wl,-rpath,/home/egor/study_proj/senya/build/lib lib/libcurl-d.so -lpthread -ldl -lpthread /usr/lib/x86_64-linux-gnu/libz.so 
