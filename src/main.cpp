@@ -33,10 +33,11 @@ void processData(std::shared_ptr<program_handler> pr    )
 
         pr->m->lock();
         std::vector<float >temp_data= data;
+        pr->data .clear();
         pr->m->unlock();
 
 
-        if(!pr->data .empty())
+        if(!pr->temp_data .empty())
         {
             double average=0;
             for (unsigned i=0;i<temp_data .size();++i)
@@ -49,7 +50,7 @@ void processData(std::shared_ptr<program_handler> pr    )
             counter++;
 
             pr->m->lock();
-            pr->data .clear();
+
             pr->m->unlock();
         }
 
