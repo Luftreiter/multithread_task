@@ -53,22 +53,27 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *storage)
     // poidet i tak poka
 
     //temp_ptr->m.lock();
-    temp_ptr->download_pos->start_index= temp_ptr->data.size();
+    temp_ptr->download_pos->start_index= temp_ptr->data_download.size();
 
     for (i=0;i<nmemb/sizeof (float);++i)
     {
 
 
 
+       temp_ptr->m.lock();
+       temp_ptr->data_download.push_back(*float_ptr);
+       temp_ptr->m.unlock();
 
-        temp_ptr->data.push_back(*float_ptr);
 
        // std::cout<<" download_pos->start_index:"<< temp_ptr->download_pos->start_index <<" "<< std::endl;
-        temp_ptr->download_pos->end_index=temp_ptr->data.size();
+        temp_ptr->download_pos->end_index=temp_ptr->data_download.size();
         //std::cout<<" download_pos->end_index:"<< temp_ptr->data.size() <<" "<< std::endl;
         float_ptr++;
     }
-
+if (temp_ptr->data_download.size()>10000)
+{
+    temp_ptr->data_download.clear();
+}
 
 
     // temp_ptr->m.unlock();

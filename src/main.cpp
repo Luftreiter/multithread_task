@@ -13,7 +13,7 @@
 
 #include <memory>
 
-
+#include <algorithm>
 #include "curl_utils.h"
 //our data and thread logic
 #include "program_handler.h"
@@ -33,44 +33,54 @@ void processData(std::shared_ptr<program_handler> pr    )
         // pr->logic2->wait();
 
 
-            pr->process_pos->start_index=pr->data.size();
+        pr->process_pos->start_index=pr->download_pos->start_index;
+        pr->process_pos->end_index=pr->download_pos->end_index;
 
-            if(pr->data.size()>100)
+
+        if(!pr->data_download.empty())
+        {
+
+            for (unsigned i=0;i<pr->data_download.size();++i)
             {
 
-                double average=0;
-                for (unsigned i=0;i<100;++i)
-                {
-                    average+=static_cast<double>(pr->data.at(i));
-                  pr->data.pop_back();
-
-                    std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
-                }
-                average=average/static_cast<double>(100);
-                counter++;
+                 pr->data_process.push_back(pr->data_download[i]);
 
             }
-            else {
-              //  pr->logic1->wait();
-          //  pr->data.clear();
-            }
-
-            // std::cout<<"process_data "<<counter++ <<"  t"<<std::endl;
 
 
-            //   pr->m.lock();
-
-
-            if(pr->logic_main->is_thread_ready==true)
-            {
-                break;
-            }
-            //     pr->m.unlock();
         }
 
-        //pr->logic1->run();
+        if(!pr->data_process.empty())
+        {
+            double average=0;
+            for (unsigned i=0;i<pr->data_process.size();++i)
+            {
+                average+=static_cast<double>(pr->data_process.at(i));
 
+                std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
+            }
+            average=average/static_cast<double>(100);
+            counter++;
+
+            pr->data_process.clear();
+        }
+
+        // std::cout<<"process_data "<<counter++ <<"  t"<<std::endl;
+
+
+        //   pr->m.lock();
+
+
+        if(pr->logic_main->is_thread_ready==true)
+        {
+            break;
+        }
+        //     pr->m.unlock();
     }
+
+    //pr->logic1->run();
+
+}
 
 
 
