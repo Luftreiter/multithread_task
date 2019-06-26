@@ -31,27 +31,24 @@ void processData(std::shared_ptr<program_handler> pr    )
     while(true)
     {
 
-        pr->m->lock();
-        pr->temp_data= data;
-        pr->data .clear();
-        pr->m->unlock();
 
 
-        if(!pr->temp_data .empty())
+pr->m->lock();
+        if(!pr->data .empty())
         {
             double average=0;
-            for (unsigned i=0;i<temp_data .size();++i)
+            for (unsigned i=0;i<pr->data .size();++i)
             {
-                average+=static_cast<double>(temp_data .at(i));
+                 
 
                 std::cout<<"average:"<<average<<" of "<<counter<<"chunk data"<<std::endl;
             }
-            average=average/static_cast<double>(100);
+            average=average/static_cast<double>(pr->data .size());
             counter++;
 
-        pr->temp_data .clear();
+            pr->data .clear();
         }
-
+pr->m->unlock();
 
         if(pr->logic_main->is_thread_ready==true)
         {
